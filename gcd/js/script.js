@@ -2,8 +2,8 @@ $(document).ready(function(){
 
 	$("#submit").click(function(event){
 		event.preventDefault();
-		var num1 = $('input[name="number1"]').val();
-		var num2 = $('input[name="number2"]').val();
+		var num1 = parseInt($('input[name="number1"]').val());
+		var num2 = parseInt($('input[name="number2"]').val());
 		if ($("#difference").is(':empty'))
 		{
 			difference(num1, num2, "#difference");
@@ -41,6 +41,7 @@ function difference(number1, number2, id)
 		{
 			num2 = num2 - num1;
 		}
+		
 		html = "=GCD(" + num1 + "," + num2 + ")<br>";
 		$(id).append(html);
 		count += 1;
@@ -53,17 +54,9 @@ function difference(number1, number2, id)
 			return
 		}
 	}
-	if (num1 == 0)
-	{
-		console.log();
-		html = "=" + num2 + "<br>";
-		$(id).append(html);
-	}
-	else
-	{
-		html = "=" + num1 + "<br>";
-		$(id).append(html);
-	}
+	html = "=" + num1 + "<br>";
+	$(id).append(html);
+
 	if (count == 1)
 	{
 		html = "<br><b>" + count + " step</b><br>";
