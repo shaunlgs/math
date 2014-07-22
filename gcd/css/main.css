@@ -1,0 +1,25 @@
+.table {
+	width: 50%;
+	height:50%;
+}
+.table tr td {
+	border-top-style: none;
+	border-bottom-style: solid;
+	border-bottom-color: black;
+	border-bottom-width:thin;
+}
+.table .col1 {
+	border-bottom-style: none;
+}
+.table .col2 {
+	border-left-style: solid;
+	border-left-color: black;
+	border-left-width:thin;
+}
+.table .last {
+	border-left-style: none;
+	border-bottom-style: none;
+}
+.table tr td {
+	text-align: center;
+}

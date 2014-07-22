@@ -107,11 +107,26 @@ function remainder(number1, number2, id)
 	$(id).append(html);
 }
 
-function primality(number)
+function primality(num)
 {
+	var number = num;
+	var count = 0;
+	var answer = true;
+	if (number <= 1)
+	{
+		count += 1;
+		return {
+			answer: false,
+			count: count
+		}
+	}
 	if (number == 2 || number == 3)
 	{
-		return true;
+		count += 1;
+		return {
+			answer: true,
+			count: count
+		}
 	}
 	else
 	{
@@ -120,11 +135,19 @@ function primality(number)
 		{
 			if (number % i == 0)
 			{
-				return false;
+				count += 1;
+				return {
+					answer: false,
+					count: count
+				}
 			}
 			i += 1;
+			count += 1;
 		}
-		return true;
+		return {
+			answer: true,
+			count: count
+		}
 	}
 }
 
@@ -132,46 +155,84 @@ function primeDivide(number1, number2, id)
 {
 	var num1 = number1;
 	var num2 = number2;
+	// arrays
 	var count = [];
 	var common = [];
 	var html = "<h2>Division by primes method</h2><br>";
 	$(id).html(html);
 	// find smallest common prime factor until no smallest common prime can be found
+	var table = document.createElement('table');
+	table.className = "table";
+	var appender = document.getElementById("primeDivide");
+	appender.appendChild(table);
+	var trIndex = 0;
+	var tdIndex = 0;
+	var tr = [];
+	var td = [];
+	var text = [];
+
 	while (true)
 	{
 		var result = smallestCommonPrime(num1, num2);
+		console.log(smallestCommonPrime(10, 5))
 		// if no smallest common prime factor can be found
 		if (result.smallest == 0)
 		{
-			// if no smallest common prime factor at all (this is during first loop)
-			if (count == 0)
-			{
-				count[count.length] = result.count;
-				html = "&nbsp;	&nbsp;	" + num1 + "&nbsp;	&nbsp;	&nbsp; &nbsp;" + num2 + "<br></br>";
-				$(id).append(html);
-				break;
-			}
-			// if no smallest common prime factor can be found already after many loops
-			else
-			{
-				count[count.length] = result.count;
-				html = "&nbsp;	&nbsp;	" + num1 + "&nbsp;	&nbsp;	&nbsp; &nbsp;" + num2 + "<br></br>";
-				$(id).append(html);
-				break;
-			}
+			count[count.length] = result.count;
+
+			tr[trIndex] = document.createElement('tr');
+			td[tdIndex] = document.createElement('td');
+			td[tdIndex].className = "last";
+			text[tdIndex] = document.createTextNode("");
+			td[tdIndex].appendChild(text[tdIndex]);
+			tr[trIndex].appendChild(td[tdIndex]);
+			tdIndex += 1;
+			td[tdIndex] = document.createElement('td');
+			td[tdIndex].className = "last";
+			text[tdIndex] = document.createTextNode(num1);
+			td[tdIndex].appendChild(text[tdIndex]);
+			tr[trIndex].appendChild(td[tdIndex]);
+			tdIndex += 1;
+			td[tdIndex] = document.createElement('td');
+			td[tdIndex].className = "last";
+			text[tdIndex] = document.createTextNode(num2);
+			td[tdIndex].appendChild(text[tdIndex]);
+			tr[trIndex].appendChild(td[tdIndex]);
+			tdIndex += 1;
+			table.appendChild(tr[trIndex]);
+			trIndex += 1;
+			break;
 		}
 		// smallest common prime factor found
 		else
 		{
-			html = result.smallest + " |<u>" + num1 + "</u>___<u>" + num2 + "</u><br>";
-			$(id).append(html);
+			tr[trIndex] = document.createElement('tr');
+			td[tdIndex] = document.createElement('td');
+			td[tdIndex].className = "col1";
+			text[tdIndex] = document.createTextNode(result.smallest);
+			td[tdIndex].appendChild(text[tdIndex]);
+			tr[trIndex].appendChild(td[tdIndex]);
+			tdIndex += 1;
+			td[tdIndex] = document.createElement('td');
+			td[tdIndex].className = "col2";
+			text[tdIndex] = document.createTextNode(num1);
+			td[tdIndex].appendChild(text[tdIndex]);
+			tr[trIndex].appendChild(td[tdIndex]);
+			tdIndex += 1;
+			td[tdIndex] = document.createElement('td');
+			text[tdIndex] = document.createTextNode(num2);
+			td[tdIndex].appendChild(text[tdIndex]);
+			tr[trIndex].appendChild(td[tdIndex]);
+			tdIndex += 1;
+			table.appendChild(tr[trIndex]);
+			trIndex += 1;
+
 			num1 /= result.smallest;
 			num2 /= result.smallest;
 			common[common.length] = result.smallest;
 			count[count.length] = result.count;
 		}
 	}
-
 	html = "Answer<br>=";
 	// print answer for numbers that have no smallest common prime factor
 	if (common.length == 0)
@@ -233,21 +294,21 @@ function primeDivide(number1, number2, id)
 function smallestCommonPrime(num1, num2)
 {
 	var count = 0;
-	// print the number of 2s that divide n
 	if (num1%2 == 0 && num2%2 == 0)
 	{
 		num1 /= 2;
 		num2 /= 2;
-		count += 1;
 		return {
 			smallest: 2,
-			count: count
+			count: 1
 		}
 	}
-	// number must be odd at this point.  So we can skip one element (Note i += 2)
+	// skip even numbers because we want only prime factors
+	// stop at square root of the smaller number because 
+	// the smallest prime factor of the number cannot be more than that, 
+	// unless the number itself is a prime
     for (var i = 3; i <= Math.sqrt(Math.min(num1, num2)); i += 2)
     {
-        // If i divides numbers, add i to array and divide number
         if (num1%i == 0 && num2%i == 0)
         {
             num1 /= i;
@@ -260,10 +321,26 @@ function smallestCommonPrime(num1, num2)
         }
         count += 1;
     }
+    // for when the smaller number is a prime itself
+    var result = primality(Math.min(num1, num2));
+    if (result.answer == true)
+    {
+    	if (num1%Math.min(num1, num2) == 0 && num2%Math.min(num1,num2) == 0)
+    	{
+    		count += result.count;
+    		count += 1;
+    		return {
+    			smallest: Math.min(num1, num2),
+    			count: count
+    		}
+    		num1 /= Math.min(num1, num2);
+    		num2 /= Math.min(num1, num2);
+    	}
+    }
     return {
-		smallest: 0,
+        smallest: 0,
 		count: count
-	}
+    }
 }
 
 /* Return array of prime factors and steps taken of a given number */
