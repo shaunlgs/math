@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1">
+	<title>Lehmer code &middot; Shaun Ling</title>
+
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="js/script.js"></script>
+	<script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-49716996-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6">
+				<p><a href="/">Back to shaunlgs.com</a></p>
+				<p>
+					Lehmer code is a way to identify every permutation of a string. Say we have a string "ABCDE", the permutations "ABCED", "ABDCE", "ABDEC",...etc can each be identified by lehmer code. This is useful because lehmer code is one-to-one with the permutation, it provides a way to list all the permutation without missing out any permutation.
+				</p>
+				<p>
+					<h2>Definition of lehmer code</h2>
+					What is lehmer code? Lehmer code is different from the normal numbering system we use. In normal number system, we start from <u>0</u>, <u>1</u>, <u>2</u>....to <u>9</u>, and because the digit of the position is used up, to move on requires another position, so <u>1</u><u>0</u>, we say the radix of this numbering system is 10 because each position can only accomodate 10 digits i.e. 0 to 9.
+				</p>
+				<p>
+					<h2>Correct/ incorrect lehmer code</h2>
+					Lehmer code has radix that depends on its position index. Position index 0 has 0 radix, position index 1 has 1 radix, position index 2 has 2 radix... so the lehmer code 32<u>3</u>0 don't exist, but 32<u>1</u>0 does exist, because the position index 1 (the underlined position) can only has digit 0 or 1.
+				</p>
+				<p>
+					<h2>Lehmer code and integer</h2>
+					Lehmer code can be converted to integer, each position's value is the digit times the factorial of the position index, e.g. 3<u>2</u>10. The value of the position underlined is 2 * 2! = 4, the total value of the lehmer code is 3*3! + 2*2! + 1*1! + 0*0! = 23. The integer with its corresponding lehmer code is as follows:
+					<table class="table">
+						<thead>
+							<tr>
+								<td>Integer</td>
+								<td>Lehmer code</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>0</td>
+								<td>0</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>10</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>100</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>110</td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td>200</td>
+							</tr>
+						</tbody>
+						...etc
+					</table>
+				</p>
+				<p>
+					<h2>Lehmer code and permutation</h2>
+					How does lehmer code match to permutation? What permutation of "ABCDE" match say 00210 (note: the length of lehmer code is the same as the string we want to permutate, in this case, 5)? Each lehmer digit means how many numbers to the right is originally on the left of the said permutation digit.
+					<br>
+					<br>
+					Lehmer code 00210 match string "ABCDE" to "ABEDC", referring to the permutated string, A has lehmer code 0, so no value to the right of A is originally on the left of A (B, E, D, and C are all originally on the right of A), check! B is the same. E has lehmer code 2, meaning there are 2 values to the right of E that are originally on the left of E, namely D and C, check!, D has lehmer code 1, meaning there is 1 value to the right of D that is originally on the left of D, namely C, check! C has lehmer code 0, this is because no number is to the right of C that is originally on the left of C.
+				</p>
+			</div>
+			<div class="col-md-6">
+				<p></p>
+				<p>Enter the string that you want to permutate.</p>
+				<div class="row">
+					<div class="col-sm-12">
+						<p>
+							<form class="form-inline" role="form">
+							  <div class="form-group">
+							    <label class="sr-only" for="number1">First number</label>
+							    <input type="text" class="form-control" id="number1">
+							  </div>
+							  <button type="submit" class="btn btn-primary" id="calculate">Permutate</button>
+							  <button type="submit" class="btn btn-default" id="clear">Clear</button>
+							</form>
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12" id='stats'></div>
+				</div>
+				<div class="row">
+				  	<div class="col-sm-12" id='display'></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
