@@ -97,11 +97,7 @@ function integerToCode(int, permSize) {
     }
     var multiplier = factorial(permSize-1);
     var digit = Math.floor(int / multiplier);
-    var answer = [digit].concat(
-        integerToCode(
-            int % multiplier,
-            permSize-1));
-    return answer
+    return [digit].concat(integerToCode(int % multiplier, permSize-1));
 }
 
 function codeToPermutation(elements, code) {
