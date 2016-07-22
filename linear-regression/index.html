@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+	<title>Simple linear regression calculator- shaunlgs.com</title>
+	<script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<script src="js/main.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1>Simple linear regression calculator</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<!-- Data taken from http://www.codeabbey.com/index/task_view/simple-linear-regression -->
+					<button onclick="sampleCoordinates()" type="submit" class="btn btn-default">Click here for sample data</button>
+				</div>
+				<div class="form-group">
+					<label for="coordinates">Coordinates:</label>
+					<textarea class="form-control" rows="20" id="coordinates"></textarea>
+  					<button onclick="linearRegression()" type="submit" class="btn btn-default">Calculate linear regression</button>
+				</div>
+
+				<div class="form-group">
+					<label for="answer">Answer:</label>
+					<textarea class="form-control" rows="1" id="answer"></textarea>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</body>
